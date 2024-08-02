@@ -1,12 +1,22 @@
 const express = require('express');
-const connectDb = require('./connection');
-const User = require('./model/userModel');
 const app = express();
-connectDb();
+const userRoute = require('./routes/userRoute');
+app.use(express.json())
 
-const createUser = async()=>{
-    const res = await User.create({name:'chandan',age:21});
-    console.log(res);
-}
 
-createUser();
+
+
+app.use('/api/v1/users',userRoute)
+
+// const createUser = async()=>{
+
+// createUser();
+
+// const createTask = async()=>{
+//     const newTask = await Task.create({description:'lkdfj',isCompleted:false});
+//     console.log(newTask);
+// }
+
+// createTask();
+
+module.exports = app;
