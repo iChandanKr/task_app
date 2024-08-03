@@ -45,12 +45,10 @@ exports.getAllUsers = async (req, res) => {
 exports.updateUser = async (req, res) => {
   const id = req.params.id;
   const fieldsToUpdate = req.body;
-  console.log(fieldsToUpdate);
   try {
     const user = await User.findByIdAndUpdate(id, fieldsToUpdate, {
       new: true,
     });
-    console.log(user);
     res.status(200).json(user);
   } catch (err) {
     res.status(404).json({
