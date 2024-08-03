@@ -9,8 +9,10 @@ const {
 } = require("../controllers/userController");
 
 router.post("/register", createNewUser);
-router.get("/:id", findById);
 router.get("/", getAllUsers);
-router.patch("/:id",updateUser);
-router.delete("/:id",deleteUser);
+
+router.route("/:id").get(findById).patch(updateUser).delete(deleteUser);
+// router.get("/:id", findById);
+// router.patch("/:id",updateUser);
+// router.delete("/:id",deleteUser);
 module.exports = router;
