@@ -6,10 +6,15 @@ const {
   getAllUsers,
   updateUser,
   deleteUser,
+  loginUser,
+  updatePassword
 } = require("../controllers/userController");
+const authenticate = require('../utils/authentication');
 
 router.post("/register", createNewUser);
-router.get("/", getAllUsers);
+router.post('/login',loginUser)
+router.get("/",authenticate, getAllUsers);
+router.patch('/password/update',authenticate,updatePassword);
 
 router.route("/:id").get(findById).patch(updateUser).delete(deleteUser);
 // router.get("/:id", findById);
