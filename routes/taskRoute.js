@@ -1,4 +1,5 @@
 const express = require("express");
+const authenticate = require('../utils/authentication');
 const router = express.Router();
 const {
   addNewTask,
@@ -8,9 +9,9 @@ const {
   deleteTask,
 } = require("../controllers/taskController");
 
-router.post("/new", addNewTask);
-router.get("/", fetchAllTasks);
-router.get("/:id", fetchById);
+router.post("/new",authenticate, addNewTask);
+router.get("/",authenticate, fetchAllTasks);
+router.get("/:id",authenticate, fetchById);
 router.patch("/:id", updateTask);
 router.delete("/:id", deleteTask);
 module.exports = router;

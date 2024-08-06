@@ -2,7 +2,8 @@ const Task = require("../model/taskModel");
 
 exports.addNewTask = async (req, res) => {
   try {
-    const task = await Task.create(req.body);
+    const info = { ...req.body, user: req.user._id };
+    const task = await Task.create(info);
     if (task) {
       return res.status(201).json({
         status: "success",
@@ -18,7 +19,8 @@ exports.addNewTask = async (req, res) => {
 
 exports.fetchAllTasks = async (req, res) => {
   try {
-    const tasks = await Task.find();
+    const tasks = await Task.find({ user: req.user._id });
+    // const tasks = await req.user.populat('tasks').execPopulate();
     if (tasks) {
       return res.status(200).json({
         status: "success",
@@ -35,7 +37,7 @@ exports.fetchAllTasks = async (req, res) => {
 exports.fetchById = async (req, res) => {
   const id = req.params.id;
   try {
-    const task = await Task.findById(id);
+    const task = await Task.findOne({ _id: id, user: req.user._id });
     if (task) {
       return res.status(200).json({
         status: "success",
@@ -71,18 +73,19 @@ exports.updateTask = async (req, res) => {
   }
 };
 
-exports.deleteTask = async (req,res)=>{
-    const id = req.params.id;
+exports.deleteTask = async (req, res) => {
+  const id = req.params.id;
 
-    try {
-         await Task.findByIdAndDelete(id);
-        return res.status(200).json({
-            status:"success",
-            message:'Task deleted successfully!'
-        })
-    } catch (error) {
-        res.status(404).json({
-            status:"fail"
-        })
-    }
-}
+  try {
+    await Task.findByIdAndDelete(id);
+    return res.status(200).json({
+      status: "success",
+      message: "Task deleted successfully!",
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: "fail",
+    });
+  }
+};
+

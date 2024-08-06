@@ -49,6 +49,12 @@ const userSchema = new mongoose.Schema({
   passwordChangedAt: Date,
 });
 
+// userSchema.virtual('tasks',{
+//   ref:'Task',
+//   localField:'_id',
+//   foreignField:'user'
+// })
+
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
