@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const multer = require('multer');
+const upload = multer({dest:'uploads/'});
 const {
   createNewUser,
   findById,
@@ -7,10 +9,11 @@ const {
   updateUser,
   deleteUser,
   loginUser,
-  updatePassword
+  updatePassword,
+  uploadFile
 } = require("../controllers/userController");
 const authenticate = require('../utils/authentication');
-
+router.post('/profile',upload.single('avatar'),uploadFile);
 router.post("/register", createNewUser);
 router.post('/login',loginUser)
 router.get("/",authenticate, getAllUsers);

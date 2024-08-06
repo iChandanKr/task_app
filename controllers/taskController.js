@@ -19,7 +19,7 @@ exports.addNewTask = async (req, res) => {
 
 exports.fetchAllTasks = async (req, res) => {
   try {
-    const tasks = await Task.find({user:req.user._id});
+    const tasks = await Task.find({ user: req.user._id });
     // const tasks = await req.user.populat('tasks').execPopulate();
     if (tasks) {
       return res.status(200).json({
@@ -37,7 +37,7 @@ exports.fetchAllTasks = async (req, res) => {
 exports.fetchById = async (req, res) => {
   const id = req.params.id;
   try {
-    const task = await Task.findOne({_id:id,user:req.user._id});
+    const task = await Task.findOne({ _id: id, user: req.user._id });
     if (task) {
       return res.status(200).json({
         status: "success",
@@ -88,3 +88,4 @@ exports.deleteTask = async (req, res) => {
     });
   }
 };
+

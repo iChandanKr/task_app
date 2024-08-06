@@ -1,4 +1,6 @@
 const User = require("../model/userModel");
+const multer = require("multer");
+
 const createSendRes = require("../utils/sendRes");
 const customError = require("../utils/customError");
 
@@ -123,7 +125,8 @@ exports.updatePassword = async(req,res,next)=>{
     if(newPassword === confirmPassword){
       user.password = newPassword;
       user.confirmPassword = confirmPassword;
-      user.passwordChangedAt = Date.now();
+      user.passwordChangedAt = Date.now(  //  upload.single("avatar");
+      );
       await user.save();
       res.status(200).json({
         status:"success",
@@ -156,6 +159,20 @@ exports.deleteUser = async (req, res) => {
     });
   }
 };
+
+// const upload = multer({ dest: "uploads/" });
+exports.uploadFile = async (req, res) => {
+  try {
+  //  upload.single("avatar");
+   
+    res.send('hello');
+  } catch (error) {
+    res.status(400).json({
+      status: "Fail",
+    });
+  }
+};
+
 
 
 // exports.logout = async(req,res)=>{
