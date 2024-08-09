@@ -1,6 +1,14 @@
 const mongoose = require("mongoose");
-const uri = "mongodb://localhost:27017/task";
-
+// for testing purpose
+const dotenv = require('dotenv')
+const environment = process.env.NODE_ENV || "development";
+const path =
+environment === "development" ? "./config/dev.env" : "./config/test.env";
+dotenv.config({ path });
+const uri =
+  process.env.NODE_ENV === "development"
+    ? process.env.DEV_DB_URI
+    : process.env.TEST_DB_URI;
 const connection = async () => {
   try {
     const res = await mongoose.connect(uri);

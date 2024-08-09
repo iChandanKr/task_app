@@ -28,7 +28,9 @@ exports.createNewUser = async (req, res) => {
     // });
     createSendRes(res, 201, user);
   } catch (error) {
-    console.log(error.message);
+   res.status(500).json({
+    error
+   });
   }
 };
 
