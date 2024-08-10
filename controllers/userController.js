@@ -79,7 +79,8 @@ exports.findById = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find(); // [1,2,3]
+    return users.filter(id => id>1) // [2,3]
     res.status(200).json({
       status: "Success",
       data: {
